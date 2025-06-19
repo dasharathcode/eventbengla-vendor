@@ -13,6 +13,7 @@ const AddRoom = () => {
 
     const [inputs, setInputs] = useState({
         roomType: '',
+        name: '',
         selectCity: '',
         pricePerNight: 0,
         amenities: {
@@ -37,7 +38,7 @@ const AddRoom = () => {
             formData.append('roomType', inputs.roomType)
 
             formData.append('selectCity', inputs.selectCity)
-            
+            formData.append('name', inputs.name)
 
             formData.append('pricePerNight', inputs.pricePerNight)
             // Converting Amenities to Array & keeping only enabled Amenities
@@ -55,7 +56,9 @@ const AddRoom = () => {
                 toast.success(data.message)
                 setInputs({
                     roomType: '',
+                    name: '',
                     pricePerNight: 0,
+                    selectCity: '',
                     amenities: {
                         'Free WiFi': false,
                         'Free Breakfast': false,
@@ -92,6 +95,12 @@ const AddRoom = () => {
             </div>
 
             <div className='w-full flex max-sm:flex-col sm:gap-4 mt-4'>
+
+
+                   <div>
+                    <p className='mt-4 text-gray-800'>Name <span className='text-xs'>/night</span></p>
+                    <input type="text" placeholder='venue name' className='border border-gray-300 mt-1 rounded p-2 ' value={inputs.name} onChange={(e) => setInputs({ ...inputs, name: e.target.value })} />
+                </div>
 
                 <div className='flex-1 max-w-48'>
                     <p className='text-gray-800 mt-4'>Venue Type</p>
