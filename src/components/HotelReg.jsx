@@ -6,7 +6,7 @@ import { assets, cities } from "../assets/assets";
 const HotelReg = () => {
     const { setShowHotelReg, axios, getToken, setIsOwner } = useAppContext();
 
-    const [name, setName] = useState("");
+    const [OwnerName, setOwnerName] = useState("");
     const [address, setAddress] = useState("");
     const [contact, setContact] = useState("");
     const [city, setCity] = useState("");
@@ -15,7 +15,7 @@ const HotelReg = () => {
         try {
             event.preventDefault();
 
-            const { data } = await axios.post(`/api/hotels/`, { name, contact, address, city }, { headers: { Authorization: `Bearer ${await getToken()}` } });
+            const { data } = await axios.post(`/api/hotels/`, { OwnerName, contact, address, city }, { headers: { Authorization: `Bearer ${await getToken()}` } });
 
             if (data.success) {
                 toast.success(data.message);
@@ -38,8 +38,8 @@ const HotelReg = () => {
                     <img src={assets.closeIcon} alt="close-icon" className='absolute top-4 right-4 h-4 w-4 cursor-pointer' onClick={() => setShowHotelReg(false)} />
                     <p className="text-2xl font-semibold mt-6">Register Your Hotel</p>
                     <div className="w-full mt-4">
-                        <label htmlFor="name" className="font-medium text-gray-500">Hotel Name</label>
-                        <input onChange={(e) => setName(e.target.value)} value={name} placeholder="Type here" className="border border-gray-200 rounded w-full px-3 py-2.5 mt-1 outline-indigo-500 font-light" type="text" required />
+                        <label htmlFor="name" className="font-medium text-gray-500"> Owner Name</label>
+                        <input onChange={(e) => setOwnerName(e.target.value)} value={OwnerName} placeholder="Type here" className="border border-gray-200 rounded w-full px-3 py-2.5 mt-1 outline-indigo-500 font-light" type="text" required />
                     </div>
 
                     <div className="w-full mt-4">
