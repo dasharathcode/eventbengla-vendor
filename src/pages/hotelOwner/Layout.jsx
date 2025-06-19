@@ -51,9 +51,9 @@ const Layout = () => {
   }, [isOwner, navigate]);
 
   // Wait until isOwner is defined (true or false)
-  if (isOwner === undefined) {
-    return <div className="text-center p-10 text-xl">Loading...</div>;
-  }
+//   if (isOwner === undefined) {
+//     return <div className="text-center p-10 text-xl">Loading...</div>;
+//   }
 
   return (
     <div className="flex flex-col h-screen">
