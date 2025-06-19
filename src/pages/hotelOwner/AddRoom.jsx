@@ -98,7 +98,7 @@ const AddRoom = () => {
 
 
                    <div>
-                    <p className='mt-4 text-gray-800'>Name <span className='text-xs'>/night</span></p>
+                    <p className='mt-4 text-gray-800'>Name <span className='text-xs'></span></p>
                     <input type="text" placeholder='venue name' className='border border-gray-300 mt-1 rounded p-2 ' value={inputs.name} onChange={(e) => setInputs({ ...inputs, name: e.target.value })} />
                 </div>
 
