@@ -64,7 +64,7 @@
 //                             <th className='py-3 px-4 text-gray-800 font-medium max-sm:hidden'>Room Name</th>
 //                             <th className='py-3 px-4 text-gray-800 font-medium text-center'>Total Amount</th>
 //                             <th className='py-3 px-4 text-gray-800 font-medium text-center'>Payment Status</th>
-                       
+
 //                         </tr>
 //                     </thead>
 //                     <tbody className='text-sm'>
@@ -84,7 +84,7 @@
 //                         }
 //                     </tbody>
 //                 </table>
-              
+
 
 //             </div>
 
@@ -163,7 +163,7 @@
 //     return (
 //         <div>
 //             <Title align='left' font='outfit' title='Dashboard' subTitle='Monitor your room listings, track bookings and analyze revenue—all in one place. Stay updated with real-time insights to ensure smooth operations.' />
-            
+
 //             <div className='flex gap-4 my-8 flex-wrap'>
 //                 <div className='bg-primary/3 border border-primary/10 rounded flex p-4 pr-8 min-w-[200px]'>
 //                     <img className='max-sm:hidden h-10' src={assets.totalBookingIcon} alt="" />
@@ -275,15 +275,16 @@ const Dashboard = () => {
             if (data.success) {
                 toast.success("Booking status updated");
 
-                // ✅ Refresh the bookings again from server after update
-                fetchDashboardData(); // <-- This forces UI to reflect actual updated DB data
+                // ✅ Force re-fetch updated data
+                await updateStatus(); // <-- Wait for this to complete before UI updates
             } else {
                 toast.error(data.message);
             }
         } catch (error) {
-            toast.error(error?.response?.data?.message || "Failed to update booking status");
+            toast.error("Failed to update booking status");
         }
     };
+
 
     useEffect(() => {
         if (user) {
