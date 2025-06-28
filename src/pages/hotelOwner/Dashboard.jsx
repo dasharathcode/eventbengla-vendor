@@ -124,24 +124,35 @@ const Dashboard = () => {
             toast.error(error.message)
         }
     }
-
-    const updateStatus = async (bookingId, newStatus) => {
-        try {
-            const { data } = await axios.put(`/api/bookings/status/${bookingId}`, { status: newStatus }, {
-                headers: {
-                    Authorization: `Bearer ${await getToken()}`
-                }
-            });
-            if (data.success) {
-                toast.success("Booking status updated");
-                fetchDashboardData();
-            } else {
-                toast.error(data.message);
+    
+const updateStatus = async (bookingId, newStatus) => {
+    try {
+        const { data } = await axios.put(`/api/bookings/status/${bookingId}`, { status: newStatus }, {
+            headers: {
+                Authorization: `Bearer ${await getToken()}`
             }
-        } catch (error) {
-            toast.error("Failed to update booking status");
+        });
+        if (data.success) {
+            toast.success("Booking status updated");
+
+            // ✅ Immediately update local state to reflect UI changes
+            setDashboardData(prev => ({
+                ...prev,
+                bookings: prev.bookings.map(b => 
+                    b._id === bookingId ? { ...b, status: newStatus } : b
+                )
+            }));
+
+            // Optional: re-fetch fresh data in background after a second
+            // setTimeout(fetchDashboardData, 1000);
+        } else {
+            toast.error(data.message);
         }
+    } catch (error) {
+        toast.error("Failed to update booking status");
     }
+};
+
 
     useEffect(() => {
         if (user) {
