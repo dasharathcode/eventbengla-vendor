@@ -372,283 +372,121 @@
 
 
 
-// import React, { useEffect, useState } from 'react';
-// import { assets } from '../../assets/assets';
-// import Title from '../../components/Title';
-// import { useAppContext } from '../../context/AppContext';
-
-// const Dashboard = () => {
-//     const { currency, user, getToken, toast, axios } = useAppContext();
-
-//     const [dashboardData, setDashboardData] = useState({
-//         bookings: [],
-//         totalBookings: 0,
-//         totalRevenue: 0,
-//     });
-
-//     // 🔄 Fetch dashboard data
-//     const fetchDashboardData = async () => {
-//         try {
-//             const { data } = await axios.get('/api/bookings/hotel', {
-//                 headers: { Authorization: `Bearer ${await getToken()}` },
-//             });
-
-//             if (data.success) {
-//                 setDashboardData(data.dashboardData);
-//             } else {
-//                 toast.error(data.message);
-//             }
-//         } catch (error) {
-//             toast.error(error?.response?.data?.message || error.message);
-//         }
-//     };
-
-//     // ✅ Update booking status and re-fetch data
-//     const updateStatus = async (bookingId, newStatus) => {
-//         try {
-//             const { data } = await axios.put(
-//                 `/api/bookings/status/${bookingId}`,
-//                 { status: newStatus },
-//                 {
-//                     headers: { Authorization: `Bearer ${await getToken()}` },
-//                 }
-//             );
-
-//             if (data.success) {
-//                 toast.success("Booking status updated");
-//                 await fetchDashboardData(); // ✅ Correct function call
-//             } else {
-//                 toast.error(data.message);
-//             }
-//         } catch (error) {
-//             toast.error("Failed to update booking status");
-//         }
-//     };
-
-//     useEffect(() => {
-//         if (user) fetchDashboardData();
-//     }, [user]);
-
-//     return (
-//         <div>
-//             <Title
-//                 align='left'
-//                 font='outfit'
-//                 title='Dashboard'
-//                 subTitle='Monitor your room listings, track bookings and analyze revenue—all in one place. Stay updated with real-time insights to ensure smooth operations.'
-//             />
-
-//             <div className='flex gap-4 my-8 flex-wrap'>
-//                 <div className='bg-primary/3 border border-primary/10 rounded flex p-4 pr-8 min-w-[200px]'>
-//                     <img className='max-sm:hidden h-10' src={assets.totalBookingIcon} alt="" />
-//                     <div className='flex flex-col sm:ml-4 font-medium'>
-//                         <p className='text-blue-500 text-lg'>Total Bookings</p>
-//                         <p className='text-neutral-400 text-base'>{dashboardData.totalBookings}</p>
-//                     </div>
-//                 </div>
-//                 <div className='bg-primary/3 border border-primary/10 rounded flex p-4 pr-8 min-w-[200px]'>
-//                     <img className='max-sm:hidden h-10' src={assets.totalRevenueIcon} alt="" />
-//                     <div className='flex flex-col sm:ml-4 font-medium'>
-//                         <p className='text-blue-500 text-lg'>Total Revenue</p>
-//                         <p className='text-neutral-400 text-base'>{currency} {dashboardData.totalRevenue}</p>
-//                     </div>
-//                 </div>
-//             </div>
-
-//             <h2 className='text-xl text-blue-950/70 font-medium mb-5'>Recent Bookings</h2>
-
-//             <div className='w-full overflow-x-auto max-w-full text-left border border-gray-300 rounded-lg max-h-[400px] overflow-y-auto'>
-//                 <table className='w-full min-w-[700px]'>
-//                     <thead className='bg-gray-50'>
-//                         <tr>
-//                             <th className='py-3 px-4 text-gray-800 font-medium'>User Name</th>
-//                             <th className='py-3 px-4 text-gray-800 font-medium'>Room</th>
-//                             <th className='py-3 px-4 text-gray-800 font-medium text-center'>Amount</th>
-//                             <th className='py-3 px-4 text-gray-800 font-medium text-center'>Payment</th>
-//                             <th className='py-3 px-4 text-gray-800 font-medium text-center'>Status</th>
-//                         </tr>
-//                     </thead>
-//                     <tbody className='text-sm'>
-//                         {dashboardData.bookings.map((item, index) => (
-//                             <tr key={index}>
-//                                 <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>{item.user.username}</td>
-//                                 <td className='py-3 px-4 text-gray-500 border-t border-gray-300'>{item.room.roomType}</td>
-//                                 <td className='py-3 px-4 text-center border-t border-gray-300 text-gray-500'>
-//                                     {currency} {item.totalPrice}
-//                                 </td>
-//                                 <td className='py-3 px-4 text-center border-t border-gray-300'>
-//                                     <button className={`py-1 px-3 text-xs rounded-full ${item.isPaid ? "bg-green-200 text-green-600" : "bg-yellow-200 text-yellow-700"}`}>
-//                                         {item.isPaid ? "Paid" : "Unpaid"}
-//                                     </button>
-//                                 </td>
-//                                 <td className='py-3 px-4 text-center border-t border-gray-300'>
-//                                     <select
-//                                         value={item.status}
-//                                         onChange={(e) => updateStatus(item._id, e.target.value)}
-//                                         className='border rounded px-2 py-1 text-sm'
-//                                     >
-//                                         <option value="pending">Pending</option>
-//                                         <option value="confirmed">Confirmed</option>
-//                                         <option value="cancelled">Cancelled</option>
-//                                     </select>
-//                                 </td>
-//                             </tr>
-//                         ))}
-//                     </tbody>
-//                 </table>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Dashboard;
-
-
-
-
 import React, { useEffect, useState } from 'react';
 import { assets } from '../../assets/assets';
 import Title from '../../components/Title';
 import { useAppContext } from '../../context/AppContext';
 
 const Dashboard = () => {
-    const { currency, user, getToken, toast, axios } = useAppContext();
+  const { axios, getToken, toast, currency } = useAppContext();
+  const [bookings, setBookings] = useState([]);
 
-    const [dashboardData, setDashboardData] = useState({
-        bookings: [],
-        totalBookings: 0,
-        totalRevenue: 0,
-    });
+  const fetchBookings = async () => {
+    try {
+      const { data } = await axios.get('/api/bookings/hotel', {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
 
-    const fetchDashboardData = async () => {
-        try {
-            const { data } = await axios.get('/api/bookings/hotel', {
-                headers: { Authorization: `Bearer ${await getToken()}` },
-            });
-            if (data.success) {
-                setDashboardData(data.dashboardData);
-            } else {
-                toast.error(data.message);
-            }
-        } catch (error) {
-            toast.error(error?.response?.data?.message || error.message);
+      if (data.success) {
+        setBookings(data.dashboardData.bookings);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err.message);
+    }
+  };
+
+  const updateStatus = async (bookingId, newStatus) => {
+    try {
+      const { data } = await axios.put(
+        `/api/bookings/status/${bookingId}`,
+        { status: newStatus },
+        {
+          headers: { Authorization: `Bearer ${await getToken()}` },
         }
-    };
+      );
 
-
-    const updateStatus = async (bookingId, newStatus) => {
-        try {
-            const { data } = await axios.put(
-                `/api/bookings/status/${bookingId}`,
-                { status: newStatus },
-                {
-                    headers: { Authorization: `Bearer ${await getToken()}` },
-                }
-            );
-
-            if (data.success) {
-                toast.success("Status updated successfully");
-
-                // ✅ Animate the row
-                const row = document.getElementById(`booking-${bookingId}`);
-                if (row) {
-                    row.classList.add("animate-highlight");
-                    setTimeout(() => {
-                        row.classList.remove("animate-highlight");
-                        fetchDashboardData(); // refresh after animation
-                    }, 800);
-                } else {
-                    fetchDashboardData(); // fallback refresh
-                }
-
-            } else {
-                toast.error(data.message);
-            }
-        } catch (err) {
-            toast.error("Failed to update status");
+      if (data.success) {
+        toast.success("Status updated");
+        const row = document.getElementById(`row-${bookingId}`);
+        if (row) {
+          row.classList.add("animate-highlight");
+          setTimeout(() => {
+            row.classList.remove("animate-highlight");
+            fetchBookings(); // Refresh data after animation
+          }, 800);
+        } else {
+          fetchBookings();
         }
-    };
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error("Failed to update status");
+    }
+  };
 
+  useEffect(() => {
+    fetchBookings();
+  }, []);
 
+  return (
+    <div className="p-5">
+      <Title title="Owner Dashboard" subTitle="Manage your hotel bookings" align="left" />
 
-
-    useEffect(() => {
-        if (user) {
-            fetchDashboardData();
-        }
-    }, [user]);
-
-    return (
-        <div>
-            <Title
-                align="left"
-                font="outfit"
-                title="Dashboard"
-                subTitle="Monitor your room listings, track bookings and analyze revenue—all in one place."
-            />
-
-            <div className="flex gap-4 my-8 flex-wrap">
-                <div className="bg-primary/3 border border-primary/10 rounded flex p-4 pr-8 min-w-[200px]">
-                    <img className="max-sm:hidden h-10" src={assets.totalBookingIcon} alt="" />
-                    <div className="flex flex-col sm:ml-4 font-medium">
-                        <p className="text-blue-500 text-lg">Total Bookings</p>
-                        <p className="text-neutral-400 text-base">{dashboardData.totalBookings}</p>
-                    </div>
-                </div>
-                <div className="bg-primary/3 border border-primary/10 rounded flex p-4 pr-8 min-w-[200px]">
-                    <img className="max-sm:hidden h-10" src={assets.totalRevenueIcon} alt="" />
-                    <div className="flex flex-col sm:ml-4 font-medium">
-                        <p className="text-blue-500 text-lg">Total Revenue</p>
-                        <p className="text-neutral-400 text-base">{currency} {dashboardData.totalRevenue}</p>
-                    </div>
-                </div>
-            </div>
-
-            <h2 className="text-xl text-blue-950/70 font-medium mb-5">Recent Bookings</h2>
-            <div className="w-full overflow-x-auto max-w-full text-left border border-gray-300 rounded-lg max-h-[400px] overflow-y-auto">
-                <table className="w-full min-w-[700px]">
-                    <thead className="bg-gray-50">
-                        <tr>
-                            <th className="py-3 px-4 text-gray-800 font-medium">User</th>
-                            <th className="py-3 px-4 text-gray-800 font-medium">Room</th>
-                            <th className="py-3 px-4 text-center text-gray-800 font-medium">Amount</th>
-                            <th className="py-3 px-4 text-center text-gray-800 font-medium">Payment</th>
-                            <th className="py-3 px-4 text-center text-gray-800 font-medium">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody className="text-sm">
-                        {dashboardData.bookings.map((item, index) => (
-                            <tr key={index} id={`booking-${item._id}`}>
-
-                                <td className="py-3 px-4 text-gray-700 border-t border-gray-300">{item.user.username}</td>
-                                <td className="py-3 px-4 text-gray-500 border-t border-gray-300">{item.room.roomType}</td>
-                                <td className="py-3 px-4 text-center text-gray-500 border-t border-gray-300">
-                                    {currency} {item.totalPrice}
-                                </td>
-                                <td className="py-3 px-4 text-center border-t border-gray-300">
-                                    <span className={`py-1 px-3 text-xs rounded-full ${item.isPaid ? 'bg-green-200 text-green-700' : 'bg-yellow-200 text-yellow-700'}`}>
-                                        {item.isPaid ? 'Paid' : 'Unpaid'}
-                                    </span>
-                                </td>
-                                <td className="py-3 px-4 text-center border-t border-gray-300">
-                                    <select
-                                        value={item.status}
-                                        onChange={(e) => updateStatus(item._id, e.target.value)}
-                                        className='border rounded px-2 py-1 text-sm'
-                                    >
-                                        <option value="pending">Pending</option>
-                                        <option value="confirmed">Confirmed</option>
-                                        <option value="cancelled">Cancelled</option>
-                                    </select>
-
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    );
+      <div className="overflow-x-auto max-h-[500px] border rounded-md">
+        <table className="w-full text-sm text-left min-w-[700px]">
+          <thead className="bg-gray-100 text-gray-700">
+            <tr>
+              <th className="p-3">User</th>
+              <th className="p-3">Room</th>
+              <th className="p-3 text-center">Price</th>
+              <th className="p-3 text-center">Payment</th>
+              <th className="p-3 text-center">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((item) => (
+              <tr
+                key={item._id}
+                id={`row-${item._id}`}
+                className="border-t border-gray-300 transition-all"
+              >
+                <td className="p-3 text-gray-700">{item.user?.username}</td>
+                <td className="p-3 text-gray-500">{item.room?.roomType}</td>
+                <td className="p-3 text-center text-gray-600">
+                  {currency} {item.totalPrice}
+                </td>
+                <td className="p-3 text-center">
+                  <span
+                    className={`py-1 px-3 text-xs rounded-full ${
+                      item.isPaid
+                        ? 'bg-green-200 text-green-700'
+                        : 'bg-yellow-200 text-yellow-700'
+                    }`}
+                  >
+                    {item.isPaid ? 'Paid' : 'Unpaid'}
+                  </span>
+                </td>
+                <td className="p-3 text-center">
+                  <select
+                    value={item.status}
+                    onChange={(e) => updateStatus(item._id, e.target.value)}
+                    className="px-2 py-1 border text-sm rounded"
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="cancelled">Cancelled</option>
+                  </select>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
 };
 
 export default Dashboard;
