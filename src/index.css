@@ -18,3 +18,11 @@
 .rosepink-bg {
   background-color: #e72e77;
 }
+@keyframes fadeHighlight {
+  0% { background-color: #d1fae5; }
+  100% { background-color: transparent; }
+}
+
+.animate-highlight {
+  animation: fadeHighlight 0.8s ease-in-out;
+}

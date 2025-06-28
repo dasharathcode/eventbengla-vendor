@@ -535,6 +535,7 @@ const Dashboard = () => {
         }
     };
 
+
     const updateStatus = async (bookingId, newStatus) => {
         try {
             const { data } = await axios.put(
@@ -548,13 +549,18 @@ const Dashboard = () => {
             if (data.success) {
                 toast.success("Status updated successfully");
 
-                // ✅ Update the status instantly in UI without needing full refetch
-                setDashboardData(prev => ({
-                    ...prev,
-                    bookings: prev.bookings.map(b =>
-                        b._id === bookingId ? { ...b, status: newStatus } : b
-                    )
-                }));
+                // ✅ Animate the row
+                const row = document.getElementById(`booking-${bookingId}`);
+                if (row) {
+                    row.classList.add("animate-highlight");
+                    setTimeout(() => {
+                        row.classList.remove("animate-highlight");
+                        fetchDashboardData(); // refresh after animation
+                    }, 800);
+                } else {
+                    fetchDashboardData(); // fallback refresh
+                }
+
             } else {
                 toast.error(data.message);
             }
@@ -562,6 +568,8 @@ const Dashboard = () => {
             toast.error("Failed to update status");
         }
     };
+
+
 
 
     useEffect(() => {
@@ -610,7 +618,8 @@ const Dashboard = () => {
                     </thead>
                     <tbody className="text-sm">
                         {dashboardData.bookings.map((item, index) => (
-                            <tr key={index}>
+                            <tr key={index} id={`booking-${item._id}`}>
+
                                 <td className="py-3 px-4 text-gray-700 border-t border-gray-300">{item.user.username}</td>
                                 <td className="py-3 px-4 text-gray-500 border-t border-gray-300">{item.room.roomType}</td>
                                 <td className="py-3 px-4 text-center text-gray-500 border-t border-gray-300">
