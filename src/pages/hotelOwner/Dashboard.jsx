@@ -276,7 +276,7 @@ const Dashboard = () => {
                 toast.success("Booking status updated");
 
                 // ✅ Force re-fetch updated data
-                await updateStatus(); // <-- Wait for this to complete before UI updates
+                await fetcupdateStatus(); // <-- Wait for this to complete before UI updates
             } else {
                 toast.error(data.message);
             }
