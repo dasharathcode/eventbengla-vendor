@@ -4,10 +4,9 @@ import Title from '../../components/Title'
 import toast from 'react-hot-toast'
 import { useAppContext } from '../../context/AppContext'
 
-const AddRoom = () => {
+const AddVendor = () => {
 
-
-const { axios, getToken } = useAppContext()
+    const { axios, getToken } = useAppContext()
 
     const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null })
     const [loading, setLoading] = useState(false);
@@ -150,4 +149,5 @@ const { axios, getToken } = useAppContext()
         </form>
     )
 }
-export default AddRoom
+
+export default AddVendor
