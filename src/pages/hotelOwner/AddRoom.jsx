@@ -7,13 +7,14 @@ import { useAppContext } from '../../context/AppContext'
 const AddRoom = () => {
 
 
-const { axios, getToken } = useAppContext()
+    const { axios, getToken } = useAppContext()
 
     const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null })
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
         roomType: '',
+        type: 'venue', // ✅ Automatically set type as venue
         name: '',
         selectCity: '',
         pricePerNight: 0,
@@ -40,7 +41,7 @@ const { axios, getToken } = useAppContext()
 
             formData.append('selectCity', inputs.selectCity)
             formData.append('name', inputs.name)
-
+            formData.append('type', 'venue'); // ✅ Automatically set type as venue
             formData.append('pricePerNight', inputs.pricePerNight)
             // Converting Amenities to Array & keeping only enabled Amenities
             const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key])
@@ -57,6 +58,7 @@ const { axios, getToken } = useAppContext()
                 toast.success(data.message)
                 setInputs({
                     roomType: '',
+                    type: 'venue',
                     name: '',
                     pricePerNight: 0,
                     selectCity: '',
@@ -82,7 +84,7 @@ const { axios, getToken } = useAppContext()
 
     return (
         <form onSubmit={onSubmitHandler}>
-            <Title align='left' font='outfit' title='Add Room' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
+            <Title align='left' font='outfit' title='Add Venue ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
             {/* Upload Area For Images */}
             <p className='text-gray-800 mt-10'>Images</p>
             <div className='grid grid-cols-2 sm:flex gap-4 my-2 flex-wrap'>
@@ -98,7 +100,7 @@ const { axios, getToken } = useAppContext()
             <div className='w-full flex max-sm:flex-col sm:gap-4 mt-4'>
 
 
-                   <div>
+                <div>
                     <p className='mt-4 text-gray-800'>Name <span className='text-xs'></span></p>
                     <input type="text" placeholder='venue name' className='border border-gray-300 mt-1 rounded p-2 ' value={inputs.name} onChange={(e) => setInputs({ ...inputs, name: e.target.value })} />
                 </div>
@@ -121,7 +123,7 @@ const { axios, getToken } = useAppContext()
                         <option value=''>select  city</option>
                         <option value='Sonamukhi'>Sonamukhi </option>
                         <option value='Bankura'>Bankura </option>
-            
+
                     </select>
                 </div>
 

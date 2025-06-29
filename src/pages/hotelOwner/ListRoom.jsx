@@ -11,7 +11,7 @@ const ListRoom = () => {
     // Fetch Rooms of the Hotel Owner
     const fetchRooms = async () => {
         try {
-            const { data } = await axios.get('/api/rooms/owner', { headers: { Authorization: `Bearer ${await getToken()}` } })
+            const { data } = await axios.get('/api/rooms/owner?type=venue', { headers: { Authorization: `Bearer ${await getToken()}` } })
             if (data.success) {
                 setRooms(data.rooms)
             }
@@ -59,7 +59,14 @@ const ListRoom = () => {
                     <tbody className='text-sm'>
                         {
                             rooms.map((item, index) => (
+
                                 <tr key={index}>
+
+
+                                    <td className="py-3 px-4 border-t border-gray-300">
+                                        <img src={item.images[0]} alt={item.name} className="h-16 w-24 object-cover rounded" />
+                                    </td>
+
                                     <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>{item.roomType}</td>
                                     <td className='py-3 px-4 text-gray-400 border-t border-gray-300 max-sm:hidden'>{item.amenities.join(', ')}</td>
                                     <td className='py-3 px-4 text-gray-400 border-t border-gray-300'>{item.pricePerNight}</td>
@@ -79,7 +86,7 @@ const ListRoom = () => {
         </div>
     )
 }
-  
+
 
 
 

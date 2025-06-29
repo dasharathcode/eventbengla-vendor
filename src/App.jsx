@@ -7,7 +7,12 @@ import Dashboard from './pages/hotelOwner/Dashboard'
 import AddRoom from './pages/hotelOwner/AddRoom'
 import ListRoom from './pages/hotelOwner/ListRoom'
 import HotelReg from './components/HotelReg'
+
+ // Importing AddVendor component
+  
+import AdminBookingManager from './pages/hotelOwner/AdminBookingManager'
 import AddVendor from './pages/hotelOwner/AddVendor'
+import ListVendor from './pages/hotelOwner/ListVendor'
 import { useAppContext } from './context/AppContext'
 import { Toaster } from 'react-hot-toast'
 
@@ -43,6 +48,8 @@ const App = () => {
           <Route path="add-room" element={<AddRoom />} />
           <Route path="list-room" element={<ListRoom />} />
           <Route path="add-vendor" element={<AddVendor />} />
+          <Route path="booking-manager" element={<AdminBookingManager />} />
+          <Route path="list-vendor" element={<ListVendor />} />
 
         </Route>
       </Routes>
