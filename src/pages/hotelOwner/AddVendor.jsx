@@ -84,7 +84,7 @@ const AddVendor = () => {
 
     return (
         <form onSubmit={onSubmitHandler}>
-            <Title align='left' font='outfit' title='Add Venue ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
+            <Title align='left' font='outfit' title='Add vendor ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
             {/* Upload Area For Images */}
             <p className='text-gray-800 mt-10'>Images</p>
             <div className='grid grid-cols-2 sm:flex gap-4 my-2 flex-wrap'>
