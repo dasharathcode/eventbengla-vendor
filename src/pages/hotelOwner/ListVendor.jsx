@@ -49,43 +49,55 @@ const ListVendor = () => {
   }, [user]);
 
   return (
-    <div>
+    <div className="px-6 py-10">
       <Title
         align="left"
         font="outfit"
         title="Vendor Listings"
         subTitle="View, edit, or manage all listed vendor services. Keep the vendor details up-to-date for the best customer experience."
       />
-      <p className="text-gray-500 mt-8">Total Vendors</p>
 
-      <div className="w-full max-w-3xl text-left border border-gray-300 rounded-lg max-h-80 overflow-y-scroll mt-3">
-        <table className="w-full">
-          <thead className="bg-gray-50">
+      <p className="text-gray-600 font-medium text-lg mt-8">Total Vendors: {rooms.length}</p>
+
+      <div className="w-full max-w-6xl mt-4 overflow-x-auto rounded-xl border border-gray-200 shadow-sm">
+        <table className="w-full text-left table-auto">
+          <thead className="bg-gray-100 text-gray-700 text-sm uppercase">
             <tr>
-              <th className="py-3 px-4 text-gray-800 font-medium">Name</th>
-              <th className="py-3 px-4 text-gray-800 font-medium max-sm:hidden">Facility</th>
-              <th className="py-3 px-4 text-gray-800 font-medium">Price</th>
-              <th className="py-3 px-4 text-gray-800 font-medium text-center">Available</th>
+              <th className="px-6 py-4">Image</th>
+              <th className="px-6 py-4">Name</th>
+              <th className="px-6 py-4 max-sm:hidden">Facility</th>
+              <th className="px-6 py-4">Price</th>
+              <th className="px-6 py-4 text-center">Available</th>
             </tr>
           </thead>
-          <tbody className="text-sm">
+          <tbody className="bg-white text-gray-700">
             {rooms.map((item, index) => (
-              <tr key={index}>
-                <td className="py-3 px-4 text-gray-700 border-t border-gray-300">{item.roomType}</td>
-                <td className="py-3 px-4 text-gray-400 border-t border-gray-300 max-sm:hidden">
+              <tr key={index} className="border-t hover:bg-gray-50 transition duration-200">
+                <td className="px-6 py-4">
+                  <img
+                    src={item.images[0]}
+                    alt={item.name}
+                    className="h-16 w-24 object-cover rounded-md border border-gray-300"
+                  />
+                </td>
+                <td className="px-6 py-4 font-medium">{item.roomType}</td>
+                <td className="px-6 py-4 max-sm:hidden">
                   {item.amenities?.join(', ') || 'N/A'}
                 </td>
-                <td className="py-3 px-4 text-gray-400 border-t border-gray-300">₹{item.pricePerNight}</td>
-                <td className="py-3 px-4 border-t border-gray-300 text-center text-sm text-red-500">
-                  <label className="relative inline-flex items-center cursor-pointer text-gray-900 gap-3">
+                <td className="px-6 py-4 text-gray-600 font-semibold">
+                  ₹{item.pricePerNight}
+                </td>
+                <td className="px-6 py-4 text-center">
+                  <label className="inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       className="sr-only peer"
                       onChange={() => toggleAvailability(item._id)}
                       checked={item.isAvailable}
                     />
-                    <div className="w-12 h-7 bg-slate-300 rounded-full peer peer-checked:bg-blue-600 transition-colors duration-200"></div>
-                    <span className="dot absolute left-1 top-1 w-5 h-5 bg-white rounded-full transition-transform duration-200 ease-in-out peer-checked:translate-x-5"></span>
+                    <div className="relative w-12 h-7 bg-gray-300 rounded-full peer-checked:bg-green-500 transition-colors duration-300">
+                      <span className="absolute top-1 left-1 w-5 h-5 bg-white rounded-full shadow-md transition-transform duration-300 peer-checked:translate-x-5"></span>
+                    </div>
                   </label>
                 </td>
               </tr>
@@ -94,6 +106,7 @@ const ListVendor = () => {
         </table>
       </div>
     </div>
+
   );
 };
 
