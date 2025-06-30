@@ -61,11 +61,11 @@ const ListRoom = () => {
                             rooms.map((item, index) => (
 
                                 <tr key={index}>
-
-
+                                    
                                     <td className="py-3 px-4 border-t border-gray-300">
                                         <img src={item.images[0]} alt={item.name} className="h-16 w-24 object-cover rounded" />
                                     </td>
+
 
                                     <td className='py-3 px-4 text-gray-700 border-t border-gray-300'>{item.roomType}</td>
                                     <td className='py-3 px-4 text-gray-400 border-t border-gray-300 max-sm:hidden'>{item.amenities.join(', ')}</td>
