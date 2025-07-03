@@ -16,7 +16,7 @@ const AddVendor = () => {
     roomType: '',
     type: 'vendor', // ✅ Automatically set type as venue
     name: '',
-    selectCity: '',
+    city: '',
     district: '',
     landmark: '',
     locality: '',
@@ -27,7 +27,7 @@ const AddVendor = () => {
     travelChargesAmount: 0,
     serviceArea: '',
     vendorType: '', // Optional field for vendor type
-    
+
     pricePerNight: 0,
     amenities: {
       'Free WiFi': false,
@@ -50,7 +50,7 @@ const AddVendor = () => {
       const formData = new FormData()
       formData.append('roomType', inputs.roomType)
 
-      formData.append('selectCity', inputs.selectCity)
+      formData.append('City', inputs.city || ''); // Optional field for city
       formData.append('name', inputs.name)
       formData.append('type', 'vendor'); // ✅ Automatically set type as venue
       formData.append('pricePerNight', inputs.pricePerNight)
@@ -82,7 +82,7 @@ const AddVendor = () => {
           type: 'vendor',
           name: '',
           pricePerNight: 0,
-          selectCity: '',
+         city: '',
           district: '',
           landmark: '',
           locality: '',
@@ -167,7 +167,7 @@ const AddVendor = () => {
           <select
             className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
             value={inputs.city}
-            onChange={(e) => setInputs({ ...inputs, city: e.target.value })}
+            onChange={(e) => setInputs({ ...inputs,city: e.target.value })}
           >
             <option value="">Select City</option>
             <option value="Sonamukhi">Sonamukhi</option>
