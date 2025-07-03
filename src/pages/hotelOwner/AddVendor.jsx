@@ -17,6 +17,17 @@ const AddVendor = () => {
     type: 'vendor', // ✅ Automatically set type as venue
     name: '',
     selectCity: '',
+    district: '',
+    landmark: '',
+    locality: '',
+    pincode: '',
+    googleMapLink: '',
+    experience: 0,
+    travelChargesApplicable: '',
+    travelChargesAmount: 0,
+    serviceArea: '',
+    vendorType: '', // Optional field for vendor type
+    
     pricePerNight: 0,
     amenities: {
       'Free WiFi': false,
@@ -43,6 +54,16 @@ const AddVendor = () => {
       formData.append('name', inputs.name)
       formData.append('type', 'vendor'); // ✅ Automatically set type as venue
       formData.append('pricePerNight', inputs.pricePerNight)
+      formData.append('vendorType', inputs.vendorType || ''); // Optional field for vendor type
+      formData.append('district', inputs.district || '');
+      formData.append('landmark', inputs.landmark || '');
+      formData.append('locality', inputs.locality || '');
+      formData.append('pincode', inputs.pincode || '');
+      formData.append('googleMapLink', inputs.googleMapLink || '');
+      formData.append('experience', inputs.experience || 0)
+      formData.append('travelChargesApplicable', inputs.travelChargesApplicable || 'No')
+      formData.append('travelChargesAmount', inputs.travelChargesAmount || 0)
+      formData.append('serviceArea', inputs.serviceArea || '')
       // Converting Amenities to Array & keeping only enabled Amenities
       const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key])
       formData.append('amenities', JSON.stringify(amenities))
@@ -62,6 +83,17 @@ const AddVendor = () => {
           name: '',
           pricePerNight: 0,
           selectCity: '',
+          district: '',
+          landmark: '',
+          locality: '',
+          pincode: '',
+          googleMapLink: '',
+          experience: 0,
+          travelChargesApplicable: '',
+          travelChargesAmount: 0,
+          serviceArea: '',
+
+
           amenities: {
             'Free WiFi': false,
             'Free Breakfast': false,
@@ -200,7 +232,7 @@ const AddVendor = () => {
             placeholder="Venue Pincode"
             className="border border-gray-300 mt-1 rounded p-2 w-full"
             value={inputs.pincode}
-            onChange={(e) => setInputs({ ...inputs, pricePerNight: e.target.value })}
+            onChange={(e) => setInputs({ ...inputs, pincode: e.target.value })}
           />
         </div>
 
