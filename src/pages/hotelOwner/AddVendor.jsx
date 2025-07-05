@@ -79,6 +79,7 @@ const AddVendor = () => {
         toast.success(data.message)
         setInputs({
           roomType: '',
+         
           type: 'vendor',
           name: '',
           pricePerNight: 0,
@@ -147,8 +148,8 @@ const AddVendor = () => {
           <p className="text-gray-800">Vendor Type</p>
           <select
             className="border border-gray-300 mt-1 rounded p-2 w-full"
-            value={inputs.vendorType}
-            onChange={(e) => setInputs({ ...inputs, vendorType: e.target.value })}
+            value={inputs.roomType}
+            onChange={(e) => setInputs({ ...inputs, roomType: e.target.value })}
           >
             <option value="">Select Vendor Type</option>
             <option value="Photographer">Photographer</option>
