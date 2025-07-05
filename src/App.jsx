@@ -8,8 +8,8 @@ import AddRoom from './pages/hotelOwner/AddRoom'
 import ListRoom from './pages/hotelOwner/ListRoom'
 import HotelReg from './components/HotelReg'
 
- // Importing AddVendor component
-  
+// Importing AddVendor component
+
 import AdminBookingManager from './pages/hotelOwner/AdminBookingManager'
 import AddVendor from './pages/hotelOwner/AddVendor'
 import ListVendor from './pages/hotelOwner/ListVendor'
@@ -17,7 +17,7 @@ import { useAppContext } from './context/AppContext'
 import { Toaster } from 'react-hot-toast'
 
 import Footer from './components/Footer'
-
+import Terms from './pages/Terms';
 import Loader from './components/Loader'
 
 
@@ -35,24 +35,24 @@ const App = () => {
       {!isOwnerPath && <Navbar />}
       {showHotelReg && <HotelReg />}
       <div className='min-h-[70vh]'>
-      <Routes>
-        <Route path='/' element={<Home />} />
-          
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path="/terms" element={<Terms />} />
 
-        {/* <Route path='/rooms' element={<AllRooms />} />
+          {/* <Route path='/rooms' element={<AllRooms />} />
         <Route path='/rooms/:id' element={<RoomDetails />} />
         <Route path='my-bookings' element={<MyBookings />} /> */}
-        < Route path="/loader/:nextUrl" element={<Loader />} />
-        <Route path="/owner" element={<Layout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="add-room" element={<AddRoom />} />
-          <Route path="list-room" element={<ListRoom />} />
-          <Route path="add-vendor" element={<AddVendor />} />
-          <Route path="booking-manager" element={<AdminBookingManager />} />
-          <Route path="list-vendor" element={<ListVendor />} />
+          < Route path="/loader/:nextUrl" element={<Loader />} />
+          <Route path="/owner" element={<Layout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="add-room" element={<AddRoom />} />
+            <Route path="list-room" element={<ListRoom />} />
+            <Route path="add-vendor" element={<AddVendor />} />
+            <Route path="booking-manager" element={<AdminBookingManager />} />
+            <Route path="list-vendor" element={<ListVendor />} />
 
-        </Route>
-      </Routes>
+          </Route>
+        </Routes>
       </div>
       {/* <Footer /> */}
     </div>
