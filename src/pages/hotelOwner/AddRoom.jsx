@@ -194,6 +194,7 @@ const AddRoom = () => {
                         <option value="Resorts">Resorts</option>
                         <option value="Marriage Gardens">Marriage Gardens</option>
                         <option value="Marriage Halls">Marriage Halls</option>
+                        <option value="luxury-hotels">luxury-hotels</option>
                     </select>
                 </div>
 
