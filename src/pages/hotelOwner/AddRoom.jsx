@@ -9,7 +9,7 @@ const AddRoom = () => {
 
     const { axios, getToken } = useAppContext()
 
-    const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null })
+    const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null,5: null,6: null,7: null,8: null,9: null,10: null })
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
@@ -89,7 +89,7 @@ const AddRoom = () => {
             formData.append('alcoholAllowed', inputs.alcoholAllowed || 'No')
 
 
-            
+
 
             // Converting Amenities to Array & keeping only enabled Amenities
             const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key])
