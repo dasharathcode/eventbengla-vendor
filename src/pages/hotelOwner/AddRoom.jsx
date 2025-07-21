@@ -9,14 +9,14 @@ const AddRoom = () => {
 
     const { axios, getToken } = useAppContext()
 
-    const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null,5: null,6: null,7: null,8: null,9: null,10: null })
+    const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null, 9: null, 10: null })
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
         roomType: '',
         type: 'venue', // ✅ Automatically set type as venue
         name: '',
-        selectCity: '',
+        City: '',
         district: '',
         pricePerNight: 0,
         landmark: '',
@@ -62,7 +62,7 @@ const AddRoom = () => {
             const formData = new FormData()
             formData.append('roomType', inputs.roomType)
             formData.append('district', inputs.district)
-            formData.append('selectCity', inputs.selectCity)
+            formData.append('City', inputs.City)
             formData.append('name', inputs.name)
             formData.append('type', 'venue'); // ✅ Automatically set type as venue
             formData.append('pricePerNight', inputs.pricePerNight)
@@ -109,7 +109,7 @@ const AddRoom = () => {
                     type: 'venue',
                     name: '',
                     pricePerNight: 0,
-                    selectCity: '',
+                    City: '',
                     district: '',
                     landmark: '',
                     locality: '',
