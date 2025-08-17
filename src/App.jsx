@@ -20,7 +20,7 @@ import Footer from './components/Footer'
 import Terms from './pages/Terms';
 import Loader from './components/Loader'
 
-
+import BanquetHalls from './pages/hotelOwner/add-venue/BanquetHalls'
 
 const App = () => {
 
@@ -39,9 +39,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path="/terms" element={<Terms />} />
 
-          {/* <Route path='/rooms' element={<AllRooms />} />
-        <Route path='/rooms/:id' element={<RoomDetails />} />
-        <Route path='my-bookings' element={<MyBookings />} /> */}
+        
           < Route path="/loader/:nextUrl" element={<Loader />} />
           <Route path="/owner" element={<Layout />}>
             <Route index element={<Dashboard />} />
@@ -50,7 +48,7 @@ const App = () => {
             <Route path="add-vendor" element={<AddVendor />} />
             <Route path="booking-manager" element={<AdminBookingManager />} />
             <Route path="list-vendor" element={<ListVendor />} />
-
+            <Route path="add-BanquetHall" element={<BanquetHalls />} />
           </Route>
         </Routes>
       </div>
@@ -60,3 +58,10 @@ const App = () => {
 }
 
 export default App
+
+
+
+
+
+
+

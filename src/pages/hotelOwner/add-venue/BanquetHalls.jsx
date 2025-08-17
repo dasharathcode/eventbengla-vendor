@@ -1,30 +1,42 @@
 import React, { useState } from 'react'
-import { assets } from '../../assets/assets'
-import Title from '../../components/Title'
+import { assets } from "../../../assets/assets";
+import Select from "react-select";
+import Title from '../../../components/Title'
 import toast from 'react-hot-toast'
-import { useAppContext } from '../../context/AppContext'
+import { useAppContext } from '../../../context/AppContext'
 
-const AddRoom = () => {
+const BanquetHalls = () => {
 
 
+    const cityOptions = [
+        { value: "Sonamukhi", label: "Sonamukhi" },
+        { value: "Bankura", label: "Bankura" },
+        { value: "Kolkata", label: "Kolkata" },
+        { value: "Durgapur", label: "Durgapur" },
+    ];
     const { axios, getToken } = useAppContext()
 
     const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null, 9: null, 10: null })
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
-        roomType: '',
+        roomType: 'Banquet Halls',
         type: 'venue', // ✅ Automatically set type as venue
         name: '',
         city: '',
         district: '',
-        pricePerNight: 0,
         landmark: '',
         locality: '',
         pincode: '',
         googleMapLink: '',
-        minCapacity: '',
-        maxCapacity: '',
+
+
+        priceveg: 0,
+        NumberofHalls: '',
+        pricenonveg: 0,
+        pricePerNight: 0,
+        seatCapacity: '',
+        FloatingCapacity: '',
         pricePerDay: '',
         hourlyOption: '',
         priceType: '',
@@ -40,6 +52,12 @@ const AddRoom = () => {
         ChangingRoom: '',
         Attachedwashroom: '',
         alcoholAllowed: '',
+        DanceFloor: '',
+        ACAvailable: '',
+        DrinkingWater: '',
+        Washroom: '',
+        GuestRoom: '',
+
 
         amenities: {
             'Free WiFi': false,
@@ -64,14 +82,19 @@ const AddRoom = () => {
             formData.append('district', inputs.district)
             formData.append('city', inputs.city)
             formData.append('name', inputs.name)
+            formData.append('priceveg', inputs.priceveg || 0)
+            formData.append('priceNonVeg', inputs.pricenonveg || 0)
+            formData.append('NumberofHalls', inputs.NumberofHalls || 0)
             formData.append('type', 'venue'); // ✅ Automatically set type as venue
             formData.append('pricePerNight', inputs.pricePerNight)
             formData.append('landmark', inputs.landmark)
             formData.append('locality', inputs.locality)
             formData.append('pincode', inputs.pincode)
             formData.append('googleMapLink', inputs.googleMapLink)
-            formData.append('minCapacity', inputs.minCapacity || 0)
-            formData.append('maxCapacity', inputs.maxCapacity || 0)
+
+            formData.append('seatCapacity', inputs.seatCapacity || 0)
+
+            formData.append('FloatingCapacity', inputs.FloatingCapacity || 0)
             formData.append('pricePerDay', inputs.pricePerDay || 0)
             formData.append('hourlyOption', inputs.hourlyOption || 'No')
             formData.append('priceType', inputs.priceType || 'Fixed')
@@ -87,6 +110,12 @@ const AddRoom = () => {
             formData.append('ChangingRoom', inputs.ChangingRoom || 'No')
             formData.append('Attachedwashroom', inputs.Attachedwashroom || 'No')
             formData.append('alcoholAllowed', inputs.alcoholAllowed || 'No')
+            formData.append('DanceFloor', inputs.DanceFloor || 'No')
+            formData.append('ACAvailable', inputs.ACAvailable || 'No')
+            formData.append('DrinkingWater', inputs.DrinkingWater || 'No')
+            formData.append('Washroom', inputs.Washroom || 'No')
+            formData.append('GuestRoom', inputs.GuestRoom || 0)
+
 
 
 
@@ -105,18 +134,23 @@ const AddRoom = () => {
             if (data.success) {
                 toast.success(data.message)
                 setInputs({
-                    roomType: '',
+                    roomType: 'Banquet Halls',
                     type: 'venue',
                     name: '',
+                    NumberofHalls: '',
+
                     pricePerNight: 0,
+                    priceveg: 0,
                     city: '',
                     district: '',
                     landmark: '',
                     locality: '',
                     pincode: '',
                     googleMapLink: '',
-                    minCapacity: '',
-                    maxCapacity: '',
+
+                    seatCapacity: '',
+                    FloatingCapacity: '',
+
                     pricePerDay: '',
                     hourlyOption: '',
                     priceType: '',
@@ -132,6 +166,15 @@ const AddRoom = () => {
                     ChangingRoom: '',
                     Attachedwashroom: '',
                     alcoholAllowed: '',
+                    DanceFloor: '',
+                    ACAvailable: '',
+                    DrinkingWater: '',
+                    Washroom: '',
+                    GuestRoom: '',
+                    pricenonveg: '',
+
+
+
 
                     amenities: {
                         'Free WiFi': false,
@@ -171,46 +214,72 @@ const AddRoom = () => {
 
                 {/* Name */}
                 <div>
-                    <p className="text-gray-800">Name</p>
+                    <p className="text-gray-800"> Banquet Hall Name</p>
                     <input
                         type="text"
-                        placeholder="Venue name"
+                        placeholder="Name"
                         className="border border-gray-300 mt-1 rounded p-2 w-full"
                         value={inputs.name}
                         onChange={(e) => setInputs({ ...inputs, name: e.target.value })}
                     />
                 </div>
 
-                {/* Venue Type */}
                 <div>
-                    <p className="text-gray-800">Venue Type</p>
-                    <select
-                        className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
-                        value={inputs.roomType}
-                        onChange={(e) => setInputs({ ...inputs, roomType: e.target.value })}
-                    >
-                        <option value="">Select Venue Type</option>
-                        <option value="Banquet Halls">Banquet Halls</option>
-                        <option value="Resorts">Resorts</option>
-                        <option value="Marriage Gardens">Marriage Gardens</option>
-                        <option value="Marriage Halls">Marriage Halls</option>
-                        <option value="luxury-hotels">luxury-hotels</option>
-                    </select>
+                    <p className="text-gray-800"> Number of Halls</p>
+                    <input
+                        type="number"
+                        placeholder=" Total Number of Halls"
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.NumberofHalls}
+                        onChange={(e) => setInputs({ ...inputs, NumberofHalls: e.target.value })}
+                    />
                 </div>
 
-                {/* Select City */}
+
+
                 <div>
-                    <p className="text-gray-800">Select City</p>
-                    <select
-                        className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
-                        value={inputs.city}
-                        onChange={(e) => setInputs({ ...inputs, city: e.target.value })}
-                    >
-                        <option value="">Select City</option>
-                        <option value="Sonamukhi">Sonamukhi</option>
-                        <option value="Bankura">Bankura</option>
-                    </select>
+                    <p className="text-gray-800"> Number of  Guest Room   </p>
+                    <input
+                        type="number"
+                        placeholder=" Total Number of Guest Room"
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.GuestRoom}
+                        onChange={(e) => setInputs({ ...inputs, GuestRoom: e.target.value })}
+                    />
                 </div>
+
+                {/* Select City
+                    <div>
+                        <p className="text-gray-800">Select City</p>
+                        <select
+                            className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
+                            value={inputs.city}
+                            onChange={(e) => setInputs({ ...inputs, city: e.target.value })}
+                        >
+                            <option value="">Select City</option>
+                            <option value="Sonamukhi">Sonamukhi</option>
+                            <option value="Bankura">Bankura</option>
+                        </select>
+                    </div> */}
+
+
+                <div>
+                    <p className="text-gray-800 mb-1">Select City</p>
+                    <Select
+                        options={cityOptions}
+                        value={cityOptions.find((c) => c.value === inputs.city) || null}
+                        onChange={(selected) => setInputs({ ...inputs, city: selected?.value })}
+                        placeholder="Type or Select City"
+                        isClearable
+                        isSearchable
+                        className="w-full"
+                    />
+                </div>
+
+
+
+
+
 
                 {/* Select District */}
                 <div>
@@ -237,6 +306,34 @@ const AddRoom = () => {
                         onChange={(e) => setInputs({ ...inputs, pricePerNight: e.target.value })}
                     />
                 </div>
+
+
+                <div>
+                    <p className="text-gray-800"> Veg Menu Price per plate </p>
+                    <input
+                        type="number"
+                        placeholder=" Price per  veg plate"
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.priceveg}
+                        onChange={(e) => setInputs({ ...inputs, priceveg: e.target.value })}
+                    />
+                </div>
+
+
+
+                <div>
+                    <p className="text-gray-800">  Non-Veg Menu Price per plate</p>
+                    <input
+                        type="number"
+                        placeholder=" Price per  non  plate"
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.pricenonveg}
+                        onChange={(e) => setInputs({ ...inputs, pricenonveg: e.target.value })}
+                    />
+                </div>
+
+
+
 
                 {/* Landmark */}
                 <div>
@@ -292,25 +389,25 @@ const AddRoom = () => {
 
                 {/* Min Capacity */}
                 <div>
-                    <p className="text-gray-800">Minimum Capacity</p>
+                    <p className="text-gray-800"> Seating Capacity</p>
                     <input
                         type="number"
                         placeholder="e.g. 50"
                         className="border border-gray-300 mt-1 rounded p-2 w-full"
-                        value={inputs.minCapacity}
-                        onChange={(e) => setInputs({ ...inputs, minCapacity: e.target.value })}
+                        value={inputs.seatCapacity}
+                        onChange={(e) => setInputs({ ...inputs, seatCapacity: e.target.value })}
                     />
                 </div>
 
                 {/* Max Capacity */}
                 <div>
-                    <p className="text-gray-800">Maximum Capacity</p>
+                    <p className="text-gray-800"> Floating Capacity</p>
                     <input
                         type="number"
                         placeholder="e.g. 300"
                         className="border border-gray-300 mt-1 rounded p-2 w-full"
-                        value={inputs.maxCapacity}
-                        onChange={(e) => setInputs({ ...inputs, maxCapacity: e.target.value })}
+                        value={inputs.FloatingCapacity}
+                        onChange={(e) => setInputs({ ...inputs, FloatingCapacity: e.target.value })}
                     />
                 </div>
 
@@ -427,6 +524,23 @@ const AddRoom = () => {
 
                 </div>
 
+
+
+
+
+                <div>
+                    <p className="text-gray-800"> AC / Non-AC Available ? </p>
+                    <select
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.ACAvailable}
+                        onChange={(e) => setInputs({ ...inputs, ACAvailable: e.target.value })}
+                    >
+                        <option value="">Select</option>
+                        <option value="Yes">Ac</option>
+                        <option value="No"> non Ac</option>
+                    </select>
+
+                </div>
                 {/* Generator / Power Backup */}
                 <div>
                     <p className="text-gray-800"> Generator / Power Backup </p>
@@ -440,7 +554,18 @@ const AddRoom = () => {
                         <option value="No">No</option>
                     </select>
                 </div>
-
+                <div>
+                    <p className="text-gray-800"> Dance Floor </p>
+                    <select
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.DanceFloor}
+                        onChange={(e) => setInputs({ ...inputs, DanceFloor: e.target.value })}
+                    >
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
 
                 {/* In-house Catering */}
@@ -470,6 +595,21 @@ const AddRoom = () => {
                         <option value="No">No</option>
                     </select>
                 </div>
+
+                <div>
+                    <p className="text-gray-800"> Drinking Water available </p>
+                    <select
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.DrinkingWater}
+                        onChange={(e) => setInputs({ ...inputs, DrinkingWater: e.target.value })}
+                    >
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+
 
                 {/* Sound System */}
                 <div>
@@ -513,7 +653,21 @@ const AddRoom = () => {
                     </select>
                 </div>
 
-
+                <div>
+                    <p className="text-gray-800"> Washroom available</p>
+                    <select
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.Washroom}
+                        onChange={(e) => setInputs({
+                            ...inputs,
+                            Washroom: e.target.value
+                        })}
+                    >
+                        <option value="">Select</option>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
 
 
                 {/* alcohol Allowed */}
@@ -555,4 +709,4 @@ const AddRoom = () => {
         </form>
     )
 }
-export default AddRoom
+export default BanquetHalls;
