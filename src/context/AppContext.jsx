@@ -315,113 +315,6 @@
 
 
 
-// import { useAuth, useUser } from "@clerk/clerk-react";
-// import { createContext, useContext, useEffect, useState } from "react";
-// import axios from "axios";
-// import { toast } from 'react-hot-toast';
-// import { useNavigate } from "react-router-dom";
-// import { assets } from "../assets/assets";
-
-// axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
-
-// const AppContext = createContext();
-
-// export const AppProvider = ({ children }) => {
-//     const currency = import.meta.env.VITE_CURRENCY || "$";
-//     const navigate = useNavigate();
-//     const { user } = useUser();
-//     const { getToken } = useAuth();
-
-//     const [isOwner, setIsOwner] = useState(undefined);
-//     const [pendingOwner, setPendingOwner] = useState(false); // ⬅️ নতুন state
-//     const [vendorType, setVendorType] = useState([]); // ⬅️ নতুন state
-//     const [showHotelReg, setShowHotelReg] = useState(false);
-//     const [rooms, setRooms] = useState([]);
-//     const [searchedCities, setSearchedCities] = useState([]);
-
-//     const facilityIcons = {
-//         "Free WiFi": assets.freeWifiIcon, 
-//         "Free Breakfast": assets.freeBreakfastIcon,
-//         "Room Service": assets.roomServiceIcon,
-//         "Mountain View": assets.mountainIcon,
-//         "Pool Access": assets.poolIcon,
-//     };
-
-//     const fetchUser = async () => {
-//         try {
-//             const { data } = await axios.get('/api/user', {
-//                 headers: { Authorization: `Bearer ${await getToken()}` }
-//             });
-//             if (data.success) {
-//                 setIsOwner(data.role === "hotelOwner");
-//                 setPendingOwner(data.role === "pendingOwner");
-//                 setVendorType(data.vendorType || []); // ⬅️ backend থেকে vendorType set
-//                 setSearchedCities(data.recentSearchedCities);
-//             } else {
-//                 setTimeout(fetchUser, 2000);
-//             }
-//         } catch (error) {
-//             toast.error(error.message);
-//         }
-//     };
-
-//     const fetchRooms = async () => {
-//         try {
-//             const { data } = await axios.get('/api/rooms');
-//             if (data.success) {
-//                 setRooms(data.rooms);
-//             } else {
-//                 toast.error(data.message);
-//             }
-//         } catch (error) {
-//             toast.error(error.message);
-//         }
-//     };
-
-//     useEffect(() => {
-//         if (user) {
-//             fetchUser();
-//         } else {
-//             setIsOwner(undefined);
-//             setPendingOwner(false);
-//             setVendorType([]);
-//         }
-//     }, [user]);
-
-//     useEffect(() => {
-//         fetchRooms();
-//     }, []);
-
-//     const value = {
-//         currency,
-//         navigate,
-//         user,
-//         getToken,
-//         isOwner,
-//         setIsOwner,
-//         pendingOwner,
-//         vendorType, // ⬅️ এখন context থেকে পাওয়া যাবে
-//         axios,
-//         showHotelReg,
-//         setShowHotelReg,
-//         facilityIcons,
-//         rooms,
-//         setRooms,
-//         searchedCities,
-//         setSearchedCities
-//     };
-
-//     return (
-//         <AppContext.Provider value={value}>
-//             {children}
-//         </AppContext.Provider>
-//     );
-// };
-
-// export const useAppContext = () => useContext(AppContext);
-
-
-
 
 
 
@@ -433,7 +326,7 @@
 import { useAuth, useUser } from "@clerk/clerk-react";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets";
 
@@ -442,105 +335,94 @@ axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
-    const currency = import.meta.env.VITE_CURRENCY || "$";
-    const navigate = useNavigate();
-    const { user } = useUser();
-    const { getToken } = useAuth();
+  const currency = import.meta.env.VITE_CURRENCY || "$";
+  const navigate = useNavigate();
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
-    const [isOwner, setIsOwner] = useState(undefined);
-    const [pendingOwner, setPendingOwner] = useState(false);
-    const [vendorType, setVendorType] = useState(
-        JSON.parse(localStorage.getItem("vendorType")) || []
-    );
-    const [showHotelReg, setShowHotelReg] = useState(false);
-    const [rooms, setRooms] = useState([]);
-    const [searchedCities, setSearchedCities] = useState([]);
+  const [isOwner, setIsOwner] = useState(undefined);
+  const [pendingOwner, setPendingOwner] = useState(false);
+  const [vendorType, setVendorType] = useState([]); // <-- এখন VendorType আসবে hotel schema থেকে
+  const [showHotelReg, setShowHotelReg] = useState(false);
+  const [rooms, setRooms] = useState([]);
+  const [searchedCities, setSearchedCities] = useState([]);
 
-    const facilityIcons = {
-        "Free WiFi": assets.freeWifiIcon,
-        "Free Breakfast": assets.freeBreakfastIcon,
-        "Room Service": assets.roomServiceIcon,
-        "Mountain View": assets.mountainIcon,
-        "Pool Access": assets.poolIcon,
-    };
+  const facilityIcons = {
+    "Free WiFi": assets.freeWifiIcon,
+    "Free Breakfast": assets.freeBreakfastIcon,
+    "Room Service": assets.roomServiceIcon,
+    "Mountain View": assets.mountainIcon,
+    "Pool Access": assets.poolIcon,
+  };
 
-    // User details নিয়ে আসার ফাংশন
-    const fetchUser = async () => {
-        try {
-            const { data } = await axios.get('/api/user', {
-                headers: { Authorization: `Bearer ${await getToken()}` }
-            });
+  // ✅ নতুন fetchUser API (hotel model থেকে vendorType আনবে)
+  const fetchUser = async () => {
+    try {
+      const token = await getToken();
+      const { data } = await axios.get("/api/hotels/my-hotel", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-            if (data.success) {
-                setIsOwner(data.role === "hotelOwner");
-                setPendingOwner(data.role === "pendingOwner");
+      if (data) {
+        setIsOwner(true); // যেহেতু owner তার নিজের হোটেল আনছে
+        setVendorType(data.VendorType || []); // <-- এখন vendorType array set হচ্ছে
+        setPendingOwner(false); // যদি approved না হয় তাহলে backend থেকে আলাদা flag দিতে পারো
+      }
+    } catch (error) {
+      console.error(error);
+      setIsOwner(false);
+      setVendorType([]);
+      toast.error("Failed to fetch owner data");
+    }
+  };
 
-                const types = data.vendorType || [];
-                setVendorType(types);
-                localStorage.setItem("vendorType", JSON.stringify(types));
+  const fetchRooms = async () => {
+    try {
+      const { data } = await axios.get("/api/rooms");
+      if (data.success) {
+        setRooms(data.rooms);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
-                setSearchedCities(data.recentSearchedCities);
-            } else {
-                setTimeout(fetchUser, 2000);
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
-    };
+  useEffect(() => {
+    if (user) {
+      fetchUser();
+    } else {
+      setIsOwner(undefined);
+      setPendingOwner(false);
+      setVendorType([]);
+    }
+  }, [user]);
 
-    // Rooms নিয়ে আসার ফাংশন
-    const fetchRooms = async () => {
-        try {
-            const { data } = await axios.get('/api/rooms');
-            if (data.success) {
-                setRooms(data.rooms);
-            } else {
-                toast.error(data.message);
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }
-    };
+  useEffect(() => {
+    fetchRooms();
+  }, []);
 
-    useEffect(() => {
-        if (user) {
-            fetchUser();
-        } else {
-            setIsOwner(undefined);
-            setPendingOwner(false);
-            setVendorType([]);
-            localStorage.removeItem("vendorType");
-        }
-    }, [user]);
+  const value = {
+    currency,
+    navigate,
+    user,
+    getToken,
+    isOwner,
+    setIsOwner,
+    pendingOwner,
+    vendorType, // ⬅️ এখন sidebar এইটা ইউজ করবে
+    axios,
+    showHotelReg,
+    setShowHotelReg,
+    facilityIcons,
+    rooms,
+    setRooms,
+    searchedCities,
+    setSearchedCities,
+  };
 
-    useEffect(() => {
-        fetchRooms();
-    }, []);
-
-    const value = {
-        currency,
-        navigate,
-        user,
-        getToken,
-        isOwner,
-        setIsOwner,
-        pendingOwner,
-        vendorType,
-        axios,
-        showHotelReg,
-        setShowHotelReg,
-        facilityIcons,
-        rooms,
-        setRooms,
-        searchedCities,
-        setSearchedCities
-    };
-
-    return (
-        <AppContext.Provider value={value}>
-            {children}
-        </AppContext.Provider>
-    );
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export const useAppContext = () => useContext(AppContext);
@@ -553,127 +435,3 @@ export const useAppContext = () => useContext(AppContext);
 
 
 
-
-
-
-
-
-
-
-// import { useAuth, useUser } from "@clerk/clerk-react";
-// import { createContext, useContext, useEffect, useState } from "react";
-// import axios from "axios";
-// import { toast } from 'react-hot-toast';
-// import { useNavigate } from "react-router-dom";
-// import { assets } from "../assets/assets";
-
-// axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL;
-
-// const AppContext = createContext();
-
-// export const AppProvider = ({ children }) => {
-//     const currency = import.meta.env.VITE_CURRENCY || "$";
-//     const navigate = useNavigate();
-//     const { user } = useUser();
-//     const { getToken } = useAuth();
-
-//     const [isOwner, setIsOwner] = useState(undefined);
-//     const [pendingOwner, setPendingOwner] = useState(false);
-
-//     // localStorage থেকে vendorType প্রথমবারে load হবে
-//     const [vendorType, setVendorType] = useState(() => {
-//         const saved = localStorage.getItem("vendorType");
-//         return saved ? JSON.parse(saved) : [];
-//     });
-
-//     const [showHotelReg, setShowHotelReg] = useState(false);
-//     const [rooms, setRooms] = useState([]);
-//     const [searchedCities, setSearchedCities] = useState([]);
-
-//     const facilityIcons = {
-//         "Free WiFi": assets.freeWifiIcon,
-//         "Free Breakfast": assets.freeBreakfastIcon,
-//         "Room Service": assets.roomServiceIcon,
-//         "Mountain View": assets.mountainIcon,
-//         "Pool Access": assets.poolIcon,
-//     };
-
-//     const fetchUser = async () => {
-//         try {
-//             const { data } = await axios.get('/api/user', {
-//                 headers: { Authorization: `Bearer ${await getToken()}` }
-//             });
-//             if (data.success) {
-//                 setIsOwner(data.role === "hotelOwner");
-//                 setPendingOwner(data.role === "pendingOwner");
-//                 setVendorType(data.vendorType || []); // ⬅️ backend থেকে vendorType আসবে
-//                 setSearchedCities(data.recentSearchedCities);
-//             } else {
-//                 setTimeout(fetchUser, 2000);
-//             }
-//         } catch (error) {
-//             toast.error(error.message);
-//         }
-//     };
-
-//     const fetchRooms = async () => {
-//         try {
-//             const { data } = await axios.get('/api/rooms');
-//             if (data.success) {
-//                 setRooms(data.rooms);
-//             } else {
-//                 toast.error(data.message);
-//             }
-//         } catch (error) {
-//             toast.error(error.message);
-//         }
-//     };
-
-//     // user আসলে fetchUser কল হবে
-//     useEffect(() => {
-//         if (user) {
-//             fetchUser();
-//         } else {
-//             setIsOwner(undefined);
-//             setPendingOwner(false);
-//             setVendorType([]);
-//         }
-//     }, [user]);
-
-//     useEffect(() => {
-//         fetchRooms();
-//     }, []);
-
-//     // vendorType যখনই পরিবর্তন হবে, localStorage এ save হবে
-//     useEffect(() => {
-//         localStorage.setItem("vendorType", JSON.stringify(vendorType));
-//     }, [vendorType]);
-
-//     const value = {
-//         currency,
-//         navigate,
-//         user,
-//         getToken,
-//         isOwner,
-//         setIsOwner,
-//         pendingOwner,
-//         vendorType,
-//         setVendorType, // ⬅️ এখন যেকোনো জায়গা থেকে update করা যাবে
-//         axios,
-//         showHotelReg,
-//         setShowHotelReg,
-//         facilityIcons,
-//         rooms,
-//         setRooms,
-//         searchedCities,
-//         setSearchedCities
-//     };
-
-//     return (
-//         <AppContext.Provider value={value}>
-//             {children}
-//         </AppContext.Provider>
-//     );
-// };
-
-// export const useAppContext = () => useContext(AppContext);
