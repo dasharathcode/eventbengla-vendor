@@ -503,9 +503,9 @@ const BanquetHalls = () => {
                         value={inputs.Stage}
                         onChange={(e) => setInputs({ ...inputs, Stage: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Spacious & Beautifully Decorated Stage Available">✨ Spacious & Beautifully Decorated Stage Available</option>
+                        <option value="No Stage Facility Available">❌ No Stage Facility Available</option>
                     </select>
                 </div>
 
@@ -517,9 +517,9 @@ const BanquetHalls = () => {
                         value={inputs.Parking}
                         onChange={(e) => setInputs({ ...inputs, Parking: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Safe & Spacious Parking for Guests">🚗 Safe & Spacious Parking for Guests</option>
+                        <option value="No Dedicated Parking Facility">🚫 No Dedicated Parking Facility</option>
                     </select>
 
                 </div>
@@ -535,9 +535,9 @@ const BanquetHalls = () => {
                         value={inputs.ACAvailable}
                         onChange={(e) => setInputs({ ...inputs, ACAvailable: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Ac</option>
-                        <option value="No"> non Ac</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Fully Air-Conditioned Comfort">❄️ Fully Air-Conditioned Comfort</option>
+                        <option value="Non-AC Hall Available">🌿 Non-AC Hall Available</option>
                     </select>
 
                 </div>
@@ -549,9 +549,9 @@ const BanquetHalls = () => {
                         value={inputs.PowerBackup}
                         onChange={(e) => setInputs({ ...inputs, PowerBackup: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="24x7 Generator & Power Backup Available">⚡ 24x7 Generator & Power Backup Available</option>
+                        <option value="No Generator or Power Backup Facility">❌ No Generator / Power Backup Facility</option>
                     </select>
                 </div>
                 <div>
@@ -561,9 +561,9 @@ const BanquetHalls = () => {
                         value={inputs.DanceFloor}
                         onChange={(e) => setInputs({ ...inputs, DanceFloor: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Spacious & Well-Designed Dance Floor Available">💃 Spacious & Well-Designed Dance Floor Available</option>
+                        <option value="No Dance Floor Facility">❌ No Dance Floor Facility</option>
                     </select>
                 </div>
 
@@ -576,9 +576,9 @@ const BanquetHalls = () => {
                         value={inputs.inhouseCatering}
                         onChange={(e) => setInputs({ ...inputs, inhouseCatering: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Delicious In-house Catering Service Available">🍽️ Delicious In-house Catering Service Available</option>
+                        <option value="No In-house Catering Facility">❌ No In-house Catering Facility</option>
                     </select>
                 </div>
 
@@ -590,9 +590,9 @@ const BanquetHalls = () => {
                         value={inputs.outsideCatering}
                         onChange={(e) => setInputs({ ...inputs, outsideCatering: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Outside Catering Services Allowed">✅ Outside Catering Services Allowed</option>
+                        <option value="Outside Catering Not Permitted">🚫 Outside Catering Not Permitted</option>
                     </select>
                 </div>
 
@@ -603,9 +603,9 @@ const BanquetHalls = () => {
                         value={inputs.DrinkingWater}
                         onChange={(e) => setInputs({ ...inputs, DrinkingWater: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Clean & Safe Drinking Water Available">💧 Clean & Safe Drinking Water Available</option>
+                        <option value="No Drinking Water Facility">❌ No Drinking Water Facility</option>
                     </select>
                 </div>
 
@@ -619,9 +619,9 @@ const BanquetHalls = () => {
                         value={inputs.SoundSystem}
                         onChange={(e) => setInputs({ ...inputs, SoundSystem: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Premium Sound System Available for Events">🎶 Premium Sound System Available for Events</option>
+                        <option value="No Sound System Facility">❌ No Sound System Facility</option>
                     </select>
                 </div>
 
@@ -633,9 +633,9 @@ const BanquetHalls = () => {
                         value={inputs.ChangingRoom}
                         onChange={(e) => setInputs({ ...inputs, ChangingRoom: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Spacious Changing Room Available">👗 Spacious Changing Room Available</option>
+                        <option value="No Changing Room Facility">❌ No Changing Room Facility</option>
                     </select>
                 </div>
 
@@ -647,9 +647,9 @@ const BanquetHalls = () => {
                         value={inputs.Attachedwashroom}
                         onChange={(e) => setInputs({ ...inputs, Attachedwashroom: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Attached Private Washroom Available">🚻 Attached Private Washroom Available</option>
+                        <option value="No Attached Washroom">❌ No Attached Washroom</option>
                     </select>
                 </div>
 
@@ -663,9 +663,9 @@ const BanquetHalls = () => {
                             Washroom: e.target.value
                         })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">-- Please Select --</option>
+                        <option value="Clean & Hygienic Washroom Available">🚻 Clean & Hygienic Washroom Available</option>
+                        <option value="No Washroom Facility">❌ No Washroom Facility</option>
                     </select>
                 </div>
 
@@ -678,9 +678,10 @@ const BanquetHalls = () => {
                         value={inputs.alcoholAllowed}
                         onChange={(e) => setInputs({ ...inputs, alcoholAllowed: e.target.value })}
                     >
-                        <option value="">Select</option>
-                        <option value="Yes">Yes</option>
-                        <option value="No">No</option>
+                        <option value="">Select Alcohol Policy</option>
+                        <option value="Allowed - Guests can bring their own">🍷 Allowed - Guests can bring their own</option>
+                        <option value="Available at Venue">🍺 Available at Venue</option>
+                        <option value="Not Allowed">🚫 Not Allowed</option>
                     </select>
                 </div>
 
