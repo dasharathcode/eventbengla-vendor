@@ -48,7 +48,7 @@ const App = () => {
             <Route path="add-vendor" element={<AddVendor />} />
             <Route path="booking-manager" element={<AdminBookingManager />} />
             <Route path="list-vendor" element={<ListVendor />} />
-            <Route path="add-BanquetHall" element={<BanquetHalls />} />
+            <Route path="list-banquet-hall" element={<BanquetHalls />} />
           </Route>
         </Routes>
       </div>
