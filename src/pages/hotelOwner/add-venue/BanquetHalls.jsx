@@ -115,6 +115,8 @@ const BanquetHalls = () => {
             formData.append('DrinkingWater', inputs.DrinkingWater || 'No')
             formData.append('Washroom', inputs.Washroom || 'No')
             formData.append('GuestRoom', inputs.GuestRoom || 0)
+             
+             
 
 
 
