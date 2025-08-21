@@ -70,6 +70,16 @@ const BanquetHalls = () => {
 
     const onSubmitHandler = async (e) => {
         e.preventDefault()
+
+
+
+        console.log({
+            DanceFloor: inputs.DanceFloor,
+            ACAvailable: inputs.ACAvailable,
+            GuestRoom: inputs.GuestRoom,
+            pricenonveg: inputs.pricenonveg
+        });
+
         // Check if all inputs are filled
         if (!inputs.roomType || !inputs.pricePerNight || !inputs.amenities || !Object.values(images).some(image => image)) {
             toast.error("Please fill in all the details")
@@ -115,8 +125,8 @@ const BanquetHalls = () => {
             formData.append('DrinkingWater', inputs.DrinkingWater || 'No')
             formData.append('Washroom', inputs.Washroom || 'No')
             formData.append('GuestRoom', inputs.GuestRoom || 0)
-             
-             
+
+
 
 
 
