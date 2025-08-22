@@ -14,6 +14,22 @@ const BanquetHalls = () => {
         { value: "Kolkata", label: "Kolkata" },
         { value: "Durgapur", label: "Durgapur" },
     ];
+
+
+    const districtOptions = [
+        { value: "Bankura", label: "Bankura" },
+        { value: "Purulia", label: "Purulia" },
+    ];
+
+    const spaceOptions = [
+        { value: "Indoor Banquet Hall", label: "Indoor Banquet Hall" },
+        { value: "Outdoor Lawn/Garden", label: "Outdoor Lawn/Garden" },
+        { value: "Poolside Area", label: "Poolside Area" },
+        { value: "Terrace / Rooftop", label: "Terrace / Rooftop" },
+        { value: "Covered Outdoor (Shamiana / Tent)", label: "Covered Outdoor (Shamiana / Tent)" }
+    ];
+
+
     const { axios, getToken } = useAppContext()
 
     const [images, setImages] = useState({ 1: null, 2: null, 3: null, 4: null, 5: null, 6: null, 7: null, 8: null, 9: null, 10: null })
@@ -34,7 +50,7 @@ const BanquetHalls = () => {
         priceveg: 0,
         NumberofHalls: '',
         pricenonveg: 0,
-        pricePerNight: 0,
+
         seatCapacity: '',
         FloatingCapacity: '',
         pricePerDay: '',
@@ -66,7 +82,16 @@ const BanquetHalls = () => {
             'Room Service': false,
             'Mountain View': false,
             'Pool Access': false
-        }
+        },
+
+        spaces: [
+            {
+                type: "",
+                seatingCapacity: "",
+                floatingCapacity: ""
+            }
+        ]
+
     })
 
     const onSubmitHandler = async (e) => {
@@ -97,7 +122,7 @@ const BanquetHalls = () => {
             formData.append('priceNonVeg', inputs.pricenonveg || 0)
             formData.append('NumberofHalls', inputs.NumberofHalls || 0)
             formData.append('type', 'venue'); // ✅ Automatically set type as venue
-            formData.append('pricePerNight', inputs.pricePerNight)
+
             formData.append('landmark', inputs.landmark)
             formData.append('locality', inputs.locality)
             formData.append('pincode', inputs.pincode)
@@ -127,6 +152,8 @@ const BanquetHalls = () => {
             formData.append('Washroom', inputs.Washroom || 'No')
             formData.append('GuestRoom', inputs.GuestRoom || 0)
             formData.append('decoration', inputs.decoration || '')
+            formData.append("spaces", JSON.stringify(inputs.spaces));
+
 
 
 
@@ -153,7 +180,7 @@ const BanquetHalls = () => {
                     name: '',
                     NumberofHalls: '',
 
-                    pricePerNight: 0,
+
                     priceveg: 0,
                     city: '',
                     district: '',
@@ -197,7 +224,16 @@ const BanquetHalls = () => {
                         'Room Service': false,
                         'Mountain View': false,
                         'Pool Access': false
-                    }
+                    },
+
+
+                    spaces: [
+                        {
+                            type: "",
+                            seatingCapacity: "",
+                            floatingCapacity: ""
+                        }
+                    ]
                 })
                 setImages({ 1: null, 2: null, 3: null, 4: null })
             } else {
@@ -213,7 +249,7 @@ const BanquetHalls = () => {
 
     return (
         <form onSubmit={onSubmitHandler}>
-            <Title align='left' font='outfit' title='Add Venue ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
+            <Title align='left' font='outfit' title='Add  BanquetHalls ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
             {/* Upload Area For Images */}
             <p className='text-gray-800 mt-10'>Images</p>
             <div className='grid grid-cols-2 sm:flex gap-4 my-2 flex-wrap'>
@@ -297,30 +333,32 @@ const BanquetHalls = () => {
 
 
                 {/* Select District */}
-                <div>
+                {/* <div>
                     <p className="text-gray-800">Select District</p>
                     <select
                         className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
                         value={inputs.district}
-                        onChange={(e) => setInputs({ ...inputs, district: e.target.value })}
+                        onChange={(e) => setInputs({ ...inputs,district: e.target.value })}
                     >
                         <option value="">Select District</option>
                         <option value="Bankura">Bankura</option>
                         <option value="Purulia">Purulia</option>
                     </select>
-                </div>
+                </div> */}
 
-                {/* Price */}
                 <div>
-                    <p className="text-gray-800">Price <span className="text-sm text-gray-500">/night</span></p>
-                    <input
-                        type="number"
-                        placeholder="0"
-                        className="border border-gray-300 mt-1 rounded p-2 w-full"
-                        value={inputs.pricePerNight}
-                        onChange={(e) => setInputs({ ...inputs, pricePerNight: e.target.value })}
+                    <p className="text-gray-800 mb-1">Select district</p>
+                    <Select
+                        options={districtOptions}
+                        value={districtOptions.find((c) => c.value === inputs.district) || null}
+                        onChange={(selected) => setInputs({ ...inputs, city: selected?.value })}
+                        placeholder="Type or Select district"
+                        isClearable
+                        isSearchable
+                        className="w-full"
                     />
                 </div>
+
 
 
                 <div>
@@ -471,25 +509,49 @@ const BanquetHalls = () => {
 
                 {/* Minimum Advance Required */}
                 <div>
-                    <p className="text-gray-800">Minimum Advance Required (₹)</p>
-                    <input
-                        type="number"
-                        placeholder="e.g. 2000"
+                    <p className="text-gray-800">Minimum Advance Required</p>
+                    <select
                         className="border border-gray-300 mt-1 rounded p-2 w-full"
                         value={inputs.advanceAmount}
-                        onChange={(e) => setInputs({ ...inputs, advanceAmount: e.target.value })}
-                    />
+                        onChange={(e) =>
+                            setInputs({ ...inputs, advanceAmount: e.target.value })
+                        }
+                    >
+                        <option value="">Select advance percentage</option>
+                        <option value="10% Advance Required of total booking">10% Advance Required of total booking</option>
+                        <option value="20% Advance Required of total booking ">20% Advance Required of total booking</option>
+                        <option value="30% Advance Required of total booking">30% Advance Required of total booking</option>
+                        <option value="40% Advance Required of total booking">40% Advance Required of total booking</option>
+                        <option value="50% Advance Required of total booking">50% Advance Required of total booking</option>
+                    </select>
                 </div>
+
 
                 {/* Refund Policy */}
                 <div className="sm:col-span-2 lg:col-span-3">
                     <p className="text-gray-800">Refund Policy / Cancellation Info</p>
-                    <textarea
-                        placeholder="Explain cancellation terms, refund timelines, etc."
-                        className="border border-gray-300 mt-1 rounded p-2 w-full h-24 resize-none"
+                    <select
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
                         value={inputs.refundPolicy}
                         onChange={(e) => setInputs({ ...inputs, refundPolicy: e.target.value })}
-                    />
+                    >
+                        <option value="">-- Select Refund Policy --</option>
+                        <option value="No refund after booking confirmation">
+                            ❌ No refund after booking confirmation
+                        </option>
+                        <option value="Full refund if cancelled 7 days before event">
+                            ✅ Full refund if cancelled 7 days before event
+                        </option>
+                        <option value="50% refund if cancelled 3 days before event">
+                            ⚖️ 50% refund if cancelled 3 days before event
+                        </option>
+                        <option value="Refund only in case of unavoidable circumstances">
+                            ℹ️ Refund only in case of unavoidable circumstances
+                        </option>
+                        <option value="Refund as per management discretion">
+                            🏢 Refund as per management discretion
+                        </option>
+                    </select>
                 </div>
 
                 {/* Payment Methods Accepted */}
@@ -504,6 +566,77 @@ const BanquetHalls = () => {
                     />
                 </div>
 
+            </div>
+            <div className="sm:col-span-2 lg:col-span-3">
+                <p className="text-gray-800 font-semibold">Indoor & Outdoor Space Availability</p>
+
+                {inputs.spaces.map((space, idx) => (
+                    <div key={idx} className="border rounded p-3 my-2 bg-gray-50">
+                        <Select
+                            options={spaceOptions}
+                            value={spaceOptions.find((o) => o.value === space.type) || null}
+                            onChange={(selected) => {
+                                const updatedSpaces = [...inputs.spaces];
+                                updatedSpaces[idx].type = selected?.value || "";
+                                setInputs({ ...inputs, spaces: updatedSpaces });
+                            }}
+                            placeholder="Select Space Type"
+                            className="mb-2"
+                        />
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <input
+                                type="number"
+                                placeholder="Seating Capacity"
+                                className="border border-gray-300 rounded p-2 w-full"
+                                value={space.seatingCapacity}
+                                onChange={(e) => {
+                                    const updatedSpaces = [...inputs.spaces];
+                                    updatedSpaces[idx].seatingCapacity = e.target.value;
+                                    setInputs({ ...inputs, spaces: updatedSpaces });
+                                }}
+                            />
+                            <input
+                                type="number"
+                                placeholder="Floating Capacity"
+                                className="border border-gray-300 rounded p-2 w-full"
+                                value={space.floatingCapacity}
+                                onChange={(e) => {
+                                    const updatedSpaces = [...inputs.spaces];
+                                    updatedSpaces[idx].floatingCapacity = e.target.value;
+                                    setInputs({ ...inputs, spaces: updatedSpaces });
+                                }}
+                            />
+                        </div>
+
+                        <button
+                            type="button"
+                            className="text-red-500 text-sm mt-2"
+                            onClick={() => {
+                                const updatedSpaces = inputs.spaces.filter((_, i) => i !== idx);
+                                setInputs({ ...inputs, spaces: updatedSpaces });
+                            }}
+                        >
+                            Remove
+                        </button>
+                    </div>
+                ))}
+
+                <button
+                    type="button"
+                    className="mt-2 px-3 py-1 bg-green-500 text-white rounded"
+                    onClick={() =>
+                        setInputs({
+                            ...inputs,
+                            spaces: [
+                                ...inputs.spaces,
+                                { type: "", seatingCapacity: "", floatingCapacity: "" }
+                            ]
+                        })
+                    }
+                >
+                    + Add Another Space
+                </button>
             </div>
 
 
