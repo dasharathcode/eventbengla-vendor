@@ -351,7 +351,7 @@ const BanquetHalls = () => {
                     <Select
                         options={districtOptions}
                         value={districtOptions.find((c) => c.value === inputs.district) || null}
-                        onChange={(selected) => setInputs({ ...inputs, city: selected?.value })}
+                        onChange={(selected) => setInputs({ ...inputs, district: selected?.value })}
                         placeholder="Type or Select district"
                         isClearable
                         isSearchable
