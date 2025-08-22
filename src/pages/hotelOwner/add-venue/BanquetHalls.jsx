@@ -57,6 +57,7 @@ const BanquetHalls = () => {
         DrinkingWater: '',
         Washroom: '',
         GuestRoom: '',
+        decoration: '',
 
 
         amenities: {
@@ -125,6 +126,7 @@ const BanquetHalls = () => {
             formData.append('DrinkingWater', inputs.DrinkingWater || 'No')
             formData.append('Washroom', inputs.Washroom || 'No')
             formData.append('GuestRoom', inputs.GuestRoom || 0)
+            formData.append('decoration', inputs.decoration || '')
 
 
 
@@ -184,6 +186,7 @@ const BanquetHalls = () => {
                     Washroom: '',
                     GuestRoom: '',
                     pricenonveg: '',
+                    decoration: '',
 
 
 
@@ -520,6 +523,34 @@ const BanquetHalls = () => {
                         <option value="No Stage Facility Available">❌ No Stage Facility Available</option>
                     </select>
                 </div>
+
+                <div>
+                    <p className="text-gray-800"> Decoration </p>
+                    <select
+                        className="border border-gray-300 mt-1 rounded p-2 w-full"
+                        value={inputs.decoration}
+                        onChange={(e) => setInputs({ ...inputs, decoration: e.target.value })}
+                    >
+                        <option value="">-- Please Select --</option>
+
+                        <option value="In-house Decoration Available – Venue provides its own decoration team with standard & premium setup options.">
+                            In-house Decoration Available – Venue provides its own decoration team with standard & premium setup options.
+                        </option>
+
+                        <option value="Outside Decoration Permitted – Clients can hire their own decorators, subject to venue approval & guidelines.">
+                            Outside Decoration Permitted – Clients can hire their own decorators, subject to venue approval & guidelines.
+                        </option>
+
+
+                        <option value="In-house and Outside Decoration Both Allowed – Clients can choose venue’s decoration team or bring their own decorators.">
+                            In-house and Outside Decoration Both Allowed – Clients can choose venue’s decoration team or bring their own decorators.
+                        </option>
+                    </select>
+                </div>
+
+
+
+
 
                 {/* Parking */}
                 <div>

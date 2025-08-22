@@ -161,8 +161,12 @@ const Navbar = () => {
                 }`}
         >
             <h1>
-                <Link to="/" className=" font-rubik text-2xl font-bold tracking-tighter">
-                    MyEventDays<span className="inline-block text-deep-saffron">.</span>
+                <Link
+                    to="/"
+                    className="font-rubik text-2xl font-extrabold tracking-tight flex items-center gap-2 text-white"
+                >
+                    <span>EventBengla.</span>
+
                 </Link>
             </h1>
 
@@ -231,7 +235,7 @@ const Navbar = () => {
 
                 {user && (
                     <>
-                    
+
 
                         {isPendingOwner ? (
                             <button
