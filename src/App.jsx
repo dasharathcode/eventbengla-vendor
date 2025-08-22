@@ -21,6 +21,7 @@ import Terms from './pages/Terms';
 import Loader from './components/Loader'
 
 import BanquetHalls from './pages/hotelOwner/add-venue/BanquetHalls'
+import MarriageGardens from './pages/hotelOwner/add-venue/MarriageGardens'
 
 const App = () => {
 
@@ -49,6 +50,7 @@ const App = () => {
             <Route path="booking-manager" element={<AdminBookingManager />} />
             <Route path="list-vendor" element={<ListVendor />} />
             <Route path="list-banquet-hall" element={<BanquetHalls />} />
+            <Route path="marriage-garden" element={<MarriageGardens />} />
           </Route>
         </Routes>
       </div>
