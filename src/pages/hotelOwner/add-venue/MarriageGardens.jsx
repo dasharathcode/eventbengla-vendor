@@ -36,7 +36,7 @@ const MarriageGardens = () => {
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
-        roomType: 'Banquet Halls',
+        roomType: 'marriage gardens',
         type: 'venue', // ✅ Automatically set type as venue
         name: '',
         city: '',
