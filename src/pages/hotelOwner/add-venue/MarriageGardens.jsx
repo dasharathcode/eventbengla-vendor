@@ -100,7 +100,7 @@ const MarriageGardens = () => {
 
 
         // Check if all inputs are filled
-        if (!inputs.roomType || !inputs.pricePerNight || !inputs.amenities || !Object.values(images).some(image => image)) {
+        if (!inputs.roomType || !inputs.amenities || !Object.values(images).some(image => image)) {
             toast.error("Please fill in all the details")
             return;
         }
