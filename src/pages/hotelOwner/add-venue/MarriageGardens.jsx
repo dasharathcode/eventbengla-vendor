@@ -145,7 +145,7 @@ const MarriageGardens = () => {
             formData.append('Washroom', inputs.Washroom || 'No')
             formData.append('GuestRoom', inputs.GuestRoom || 0)
             formData.append('decoration', inputs.decoration || '')
-            formData.append("spaces", JSON.stringify(inputs.spaces));
+            formData.append("spaces", JSON.stringify(spaces));
 
 
 
@@ -156,6 +156,9 @@ const MarriageGardens = () => {
 
             // Converting Amenities to Array & keeping only enabled Amenities
             const amenities = Object.keys(inputs.amenities).filter(key => inputs.amenities[key])
+            const spaces = Object.keys(inputs.spaces).filter(key => inputs.spaces[key])
+
+
             formData.append('amenities', JSON.stringify(amenities))
 
             // Adding Images to FormData
