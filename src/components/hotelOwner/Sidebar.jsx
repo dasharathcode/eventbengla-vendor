@@ -8,6 +8,7 @@ const Sidebar = () => {
     { name: "Dashboard", path: "/owner", icon: assets.dashboardIcon },
     { name: "Add  bankat ", path: "/owner/list-banquet-hall", icon: assets.addIcon },
     { name: "Add Marriage Garden", path: "/owner/marriage-garden", icon: assets.addIcon },
+    { name: "Add Wedding Resorts", path: "/owner/wedding-resort", icon: assets.addIcon },
     { name: "Add Vendor", path: "/owner/add-vendor", icon: assets.addIcon },
     { name: "List Room", path: "/owner/list-room", icon: assets.listIcon },
     { name: "List Vendor", path: "/owner/list-vendor", icon: assets.listVendorIcon },
