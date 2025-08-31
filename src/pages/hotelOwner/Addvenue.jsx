@@ -30,15 +30,7 @@ const Addvenue = () => {
     ];
 
     // উপরে options define করে নাও
-    const venueTypeOptions = [
-        { value: "Banquet Halls", label: "Banquet Halls" },
-        { value: "Marriage Gardens", label: "Marriage Gardens" },
-        { value: "Marriage Hall", label: "Marriage Hall" },
-        { value: "Wedding Resorts", label: "Wedding Resorts" },
-        { value: "Marriage Halls", label: "Marriage Halls" },
-        { value: "luxury-hotels", label: "Luxury Hotels" },
-        { value: "4 Star & Above Wedding Hotels", label: "4 Star & Above Wedding Hotels" },
-    ];
+
 
 
 
@@ -52,7 +44,7 @@ const Addvenue = () => {
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
-        roomType: [],
+        roomType: '',
 
         type: 'venue', // ✅ Automatically set type as venue
         name: '',
@@ -144,9 +136,9 @@ const Addvenue = () => {
         try {
             const formData = new FormData()
 
-            formData.append('roomType', JSON.stringify(inputs.roomType));
+            
 
-
+            formData.append('roomType', inputs.roomType)
             formData.append('district', inputs.district)
             formData.append('city', inputs.city)
             formData.append('name', inputs.name)
@@ -207,7 +199,7 @@ const Addvenue = () => {
             if (data.success) {
                 toast.success(data.message)
                 setInputs({
-                    roomType: [],
+                    roomType: '',
                     type: 'venue',
                     name: '',
                     NumberofHalls: '',
@@ -346,8 +338,7 @@ const Addvenue = () => {
                     </div> */}
 
 
-
-                {/* <div>
+                <div>
                     <p className="text-gray-800">Venue Type</p>
                     <select
                         className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
@@ -364,25 +355,9 @@ const Addvenue = () => {
                         <option value="4 Star & Above Wedding Hotels">4 Star & Above Wedding Hotels</option>
 
                     </select>
-                </div> */}
-
-
-                <div>
-                    <p className="text-gray-800 mb-1">Venue Type</p>
-                    <Select
-                        options={venueTypeOptions}
-                        value={venueTypeOptions.filter((v) => inputs.roomType.includes(v.value))}
-                        onChange={(selected) =>
-                            setInputs({
-                                ...inputs,
-                                roomType: selected ? selected.map((s) => s.value) : [],
-                            })
-                        }
-                        isMulti
-                        placeholder="Select one or more venue types"
-                        className="w-full"
-                    />
                 </div>
+
+
 
 
 
