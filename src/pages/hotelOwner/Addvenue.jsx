@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { assets } from "../../../assets/assets";
+import { assets } from "../../assets/assets";
 import Select from "react-select";
-import Title from '../../../components/Title'
+import Title from '../../components/Title'
 import toast from 'react-hot-toast'
-import { useAppContext } from '../../../context/AppContext'
+import { useAppContext } from '../../context/AppContext'
 
-const BanquetHalls = () => {
+const Addvenue = () => {
 
 
     const cityOptions = [
@@ -29,6 +29,22 @@ const BanquetHalls = () => {
         { value: "Covered Outdoor (Shamiana / Tent)", label: "Covered Outdoor (Shamiana / Tent)" }
     ];
 
+    // উপরে options define করে নাও
+    const venueTypeOptions = [
+        { value: "Banquet Halls", label: "Banquet Halls" },
+        { value: "Marriage Gardens", label: "Marriage Gardens" },
+        { value: "Marriage Hall", label: "Marriage Hall" },
+        { value: "Wedding Resorts", label: "Wedding Resorts" },
+        { value: "Marriage Halls", label: "Marriage Halls" },
+        { value: "luxury-hotels", label: "Luxury Hotels" },
+        { value: "4 Star & Above Wedding Hotels", label: "4 Star & Above Wedding Hotels" },
+    ];
+
+
+
+
+
+
 
     const { axios, getToken } = useAppContext()
 
@@ -36,7 +52,8 @@ const BanquetHalls = () => {
     const [loading, setLoading] = useState(false);
 
     const [inputs, setInputs] = useState({
-        roomType: '',
+        roomType: [],
+
         type: 'venue', // ✅ Automatically set type as venue
         name: '',
         city: '',
@@ -107,14 +124,29 @@ const BanquetHalls = () => {
         });
 
         // Check if all inputs are filled
-        if (!inputs.roomType || !inputs.pricePerNight || !inputs.amenities || !Object.values(images).some(image => image)) {
+        if (
+            !inputs.name ||
+            !inputs.city ||
+            !inputs.district ||
+            !inputs.priceveg ||
+            !inputs.pricenonveg ||
+            !inputs.NumberofHalls ||
+            !inputs.seatCapacity ||
+            !inputs.FloatingCapacity ||
+            !inputs.pricePerDay ||
+            !inputs.amenities ||
+            !Object.values(images).some(image => image)
+        ) {
             toast.error("Please fill in all the details")
             return;
         }
         setLoading(true);
         try {
             const formData = new FormData()
-            formData.append('roomType', inputs.roomType)
+
+            formData.append('roomType', JSON.stringify(inputs.roomType));
+
+
             formData.append('district', inputs.district)
             formData.append('city', inputs.city)
             formData.append('name', inputs.name)
@@ -175,7 +207,7 @@ const BanquetHalls = () => {
             if (data.success) {
                 toast.success(data.message)
                 setInputs({
-                    roomType: '',
+                    roomType: [],
                     type: 'venue',
                     name: '',
                     NumberofHalls: '',
@@ -249,7 +281,7 @@ const BanquetHalls = () => {
 
     return (
         <form onSubmit={onSubmitHandler}>
-            <Title align='left' font='outfit' title='Add  BanquetHalls ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
+            <Title align='left' font='outfit' title='Add Venue ' subTitle='Fill in the details carefully and accurate room details, pricing, and amenities, to enhance the user booking experience.' />
             {/* Upload Area For Images */}
             <p className='text-gray-800 mt-10'>Images</p>
             <div className='grid grid-cols-2 sm:flex gap-4 my-2 flex-wrap'>
@@ -265,7 +297,7 @@ const BanquetHalls = () => {
 
                 {/* Name */}
                 <div>
-                    <p className="text-gray-800"> Banquet Hall Name</p>
+                    <p className="text-gray-800"> Venue Name</p>
                     <input
                         type="text"
                         placeholder="Name"
@@ -315,7 +347,7 @@ const BanquetHalls = () => {
 
 
 
-                <div>
+                {/* <div>
                     <p className="text-gray-800">Venue Type</p>
                     <select
                         className="border opacity-80 border-gray-300 mt-1 rounded p-2 w-full"
@@ -324,12 +356,36 @@ const BanquetHalls = () => {
                     >
                         <option value="">Select Venue Type</option>
                         <option value="Banquet Halls">Banquet Halls</option>
-                        <option value="Resorts">Resorts</option>
                         <option value="Marriage Gardens">Marriage Gardens</option>
+                        <option value="Marriage Hall">Marriage Hall</option>
+                        <option value="Wedding Resorts">Wedding Resorts</option>
                         <option value="Marriage Halls">Marriage Halls</option>
                         <option value="luxury-hotels">luxury-hotels</option>
+                        <option value="4 Star & Above Wedding Hotels">4 Star & Above Wedding Hotels</option>
+
                     </select>
+                </div> */}
+
+
+                <div>
+                    <p className="text-gray-800 mb-1">Venue Type</p>
+                    <Select
+                        options={venueTypeOptions}
+                        value={venueTypeOptions.filter((v) => inputs.roomType.includes(v.value))}
+                        onChange={(selected) =>
+                            setInputs({
+                                ...inputs,
+                                roomType: selected ? selected.map((s) => s.value) : [],
+                            })
+                        }
+                        isMulti
+                        placeholder="Select one or more venue types"
+                        className="w-full"
+                    />
                 </div>
+
+
+
 
 
 
@@ -905,4 +961,4 @@ const BanquetHalls = () => {
         </form>
     )
 }
-export default BanquetHalls;
+export default Addvenue;
